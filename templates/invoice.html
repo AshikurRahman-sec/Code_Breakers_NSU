@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+{% block title %}{{user}} (Customer Invoice){% endblock %}
+{% block content %}
+
+
+
+{% if messages %}
+<div class="messages" id="message">
+    {% for message in messages %}
+    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container">
+
+<div class="card-deck">
+  <div class="card">
+    <div class="card-body">
+      <div class="col-md-12">
+        <h3 class=""><strong>Customer Invoice</strong></h3>
+ 
+        <div class="row">
+          <div class="col-6">
+            <address>
+              <br>
+            <strong>Customer Name : 
+              {{ customer.name }}</strong><br>
+              <strong>Customer Mobile No : {{customer.ccontact}}</strong>
+
+            </address>
+          </div>
+          <div class="col-6 text-right">
+            {% if customer.photo %}
+              <img class="avatar float-right img-thumbnail img-fluid" src="{{ customer.photo.url }}" style="width: 200px; margin-right: 1em;"/>
+            {% endif %}
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <strong>Purchase Summary</strong>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+
+                    <td ><strong>Product</strong></td>
+                    <td ><strong> Price</strong></td>
+                    <td>Purchase</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                    <tr>
+                      <td>{{ product.Product_Name }}</td>
+                      <td >{{product.Product_price}}</td>
+                      <td>
+                        <a href="{%url 'controller:pos:orderaccepted' product.id %}" class="button button" width="50%" align="left">Yes</a>
+                        <a href="{%url 'controller:pos:sellershow' %}" class="button button" width="50%" align="left">No</a>
+                      </td>
+                    </tr>
+                    
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+
+{% endblock %}

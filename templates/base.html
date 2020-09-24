@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title>{% block title %}{% endblock %}</title>
+
+    {% load static from staticfiles %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+
+    <style>
+      body{
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+
+
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="#"><i class="fas fa-tshirt"></i> Digital Garment System</a>
+
+        <ul class="navbar-nav">
+
+          {% if user.is_authenticated %}
+          <li class="nav-item {{ach}}">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          {%else%}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'controller:login' %}">login</a>
+          </li>
+
+          <li class="nav-item {{ac}}">
+            <a class="nav-link" href="{% url 'controller:signup' %}">signup{{acsign}}</a>
+          </li>
+          {% endif %}
+
+          {% if user.is_authenticated %}
+
+          <li class="nav-item dropdown {{news}}">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              News
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item {{news11}}" href="/news/newsall">News</a>
+              <a class="dropdown-item {{news1}}" href="/news/news">{{user}} News (Edit/Create)</a>
+            </div>
+          </li>
+
+
+
+
+
+
+
+
+          {%if user.is_authenticated and user.groups.all.0.name in "Vendor"%}
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Product
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="/inventory/create-product">Create Product</a>
+              <a class="dropdown-item " href="/inventory/product-list">Product List</a>
+              
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Order
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="/inventory/create-order">New Order</a>
+              <a class="dropdown-item " href="/inventory/order-list">Order List</a>
+              
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Delivery
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="/inventory/create-delivery">New Delivery</a>
+              <a class="dropdown-item " href="/inventory/delivery-list">Delivery List</a>
+              
+            </div>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Manage Sales
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="/pos/add_product_price">Set product price</a>
+              <a class="dropdown-item " href="/pos/product_price_list">Product price list</a>
+              <a class="dropdown-item " href="/pos/seller_show/">Customer order</a>
+              
+            </div>
+          </li>
+
+          {%endif%} 
+
+
+
+
+
+
+          
+          
+
+          {%if user.is_authenticated and user.groups.all.0.name in "Employee"%}
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Order
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="/procurement/order_create">New Order</a>
+              <a class="dropdown-item " href="/procurement/order_list">Order List</a>
+              
+            </div>
+          </li>
+
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Status
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="/procurement/order_status">Order Status Form</a>
+              <a class="dropdown-item " href="/procurement/order_status_list_all">Order Status List</a>
+              
+            </div>
+          </li>
+
+          <li class="nav-item ">
+            <a class="nav-link" href="/procurement/order_vendor">Vendor(order)</a>
+          </li>
+
+
+
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Bill
+            </a>
+
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="/accounting/bill_list">Bill List</a>
+              <a class="dropdown-item " href="/accounting/bill_create">Bill Create</a>
+            </div>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Complete Order
+            </a>
+
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="/accounting/list">List</a>
+              <a class="dropdown-item " href="/accounting/create">Add New</a>
+            </div>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Payment
+            </a>
+
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="/accounting/payment_list">List</a>
+              <a class="dropdown-item " href="/accounting/payment_create">Add New</a>
+            </div>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Yeraly Overview
+            </a>
+
+            <div class="dropdown-menu">
+              {% for q in q %}
+              
+              <a class="dropdown-item " href="/accounting/calculation/{{q}}">{{q}}</a>
+              <!--<a class="dropdown-item " href="/accounting/calculation/2019">2019</a>-->
+              {% endfor %}
+            </div>
+          </li>
+
+          {%endif%} 
+
+
+
+
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Setting
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item {{pro}}" href="/profile">Profile</a>
+              <a class="dropdown-item {{pe_ac}}" href="/profileedit">Edit Profile</a>
+              <a class="dropdown-item {{p_ac}}" href="/change_password">Reset Password</a>
+            </div>
+          </li>
+
+
+          {% if user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link" href="/admin">Admin Panel</a>
+          </li>
+          {% endif %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'controller:logout' %}">Logout</a>
+          </li>
+
+          
+
+
+
+          {% endif %}
+
+
+        </ul>
+      </nav>
+      <br>
+
+
+
+
+
+
+    </header>
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+  </body>
+  <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+
+
+</html>

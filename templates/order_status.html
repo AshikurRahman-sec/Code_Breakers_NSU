@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+{% block title %}{{user}} (Order Status){% endblock %}
+{% block content %}
+
+
+
+{% if messages %}
+<div class="messages" id="message">
+    {% for message in messages %}
+    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+<div class="container">
+
+
+<table class="table table-striped table-bordered table-sm">
+    <thead class="thead-dark">  
+    <tr>  
+        <th>Stage Name</th>  
+        <th>Order Recived</th>  
+        <th>Rawmaterials Collection</th>  
+        <th>Product stage1</th>
+        <th>Production stage2</th>
+        <th>Packing</th>  
+        <th>Shipping</th>  
+    </tr>  
+    </thead>  
+    <tbody>
+    <tr>  
+        <td>Stage status</td>  
+        <td>{{Order_Status.get_order_recived_display}}</td>  
+        <td>{{Order_Status.get_raw_materials_collection_display}}</td>
+        <td>{{Order_Status.get_production_stage1_display}}</td>
+        <td>{{Order_Status.get_production_stage2_display}}</td>
+        <td>{{Order_Status.get_packing_display}}</td>  
+        <td>{{Order_Status.get_shipping_display}}</td>  
+    </tr>  
+</tbody>
+</table>
+</div>
+
+{% endblock %}   
